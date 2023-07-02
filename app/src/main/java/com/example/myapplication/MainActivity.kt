@@ -9,6 +9,7 @@ import com.example.myapplication.utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import com.example.myapplication.dynamicserver
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,17 +27,22 @@ class MainActivity : AppCompatActivity() {
 
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val check = utils.websiteRequest()
-                Log.d("MainActivity", "check value: $check")
+                for (i in 1..10) {
+                    val check = dynamicserver.serverworker()
+                        //utils.websiteRequest()
 
-                // Update the UI on the main thread
-                launch(Dispatchers.Main) {
-                    binding.SAMPLETEXT.text = check
+                    Log.d("MainActivity", "check value: $check")
+
+                    // Update the UI on the main thread
+                    launch(Dispatchers.Main) {
+                        binding.SAMPLETEXT.text = check.toString()
+                    }
                 }
             } catch (e: Exception) {
                 Log.e("MainActivity", "An error occurred: ${e.message}")
             }
         }
+
     }
 
     companion object {
