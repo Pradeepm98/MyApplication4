@@ -26,17 +26,20 @@ class MainActivity : AppCompatActivity() {
 
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val check = utils.websiteRequest()
-                Log.d("MainActivity", "check value: $check")
+                for (i in 1..10) {
+                    val check = utils.websiteRequest()
+                    Log.d("MainActivity", "check value: $check")
 
-                // Update the UI on the main thread
-                launch(Dispatchers.Main) {
-                    binding.SAMPLETEXT.text = check
+                    // Update the UI on the main thread
+                    launch(Dispatchers.Main) {
+                        binding.SAMPLETEXT.text = check
+                    }
                 }
             } catch (e: Exception) {
                 Log.e("MainActivity", "An error occurred: ${e.message}")
             }
         }
+
     }
 
     companion object {
